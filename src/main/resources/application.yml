@@ -1,0 +1,15 @@
+server:
+  port: 9494
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/blogdb
+    username: postgres
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
