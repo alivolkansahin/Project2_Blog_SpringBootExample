@@ -13,4 +13,5 @@ public interface IService <T,ID> {
     void deleteById(ID id);
     Optional<T> findById(ID id);
     List<T> findAll();
+    Boolean existsById(ID id);
 }

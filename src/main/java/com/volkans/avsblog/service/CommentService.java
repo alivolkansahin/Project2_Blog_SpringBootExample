@@ -34,16 +34,18 @@ public class CommentService extends ServiceManager<Comment,Long> {
         this.userService = userService;
     }
 
-    public Boolean existsById(Long id){
-        return commentRepository.existsById(id);
+    public Boolean existsByPostId(Long id) {
+        return commentRepository.existsByPostId(id);
+    }
+
+    public Boolean existsByUserId(Long id){
+        return commentRepository.existsByUserId(id);
     }
 
     public List<CommentGetAllResponseDto> getAll() {
         List<Comment> comments = findAll();
         if(comments.isEmpty()) throw new AvsBlogException(ErrorType.NO_COMMENT_EXISTS);
-        List<CommentGetAllResponseDto> commentsDto = new ArrayList<>();
-        comments.forEach(comment -> commentsDto.add(ICommentMapper.INSTANCE.getAllCommentToDto(comment)));
-        return commentsDto;
+        return convertEntityListToDtoList(comments);
     }
 
     public Comment getPostById(Long id) {
@@ -71,9 +73,7 @@ public class CommentService extends ServiceManager<Comment,Long> {
     public List<CommentGetAllResponseDto> getAllByUserId(String userId) {
         if(!userService.existsById(Long.valueOf(userId))) throw new AvsBlogException(ErrorType.USER_NOT_FOUND_BY_ID);
         List<Comment> comments = getCommentByUserId(Long.valueOf(userId));
-        List<CommentGetAllResponseDto> commentsDto = new ArrayList<>();
-        comments.forEach(comment -> commentsDto.add(ICommentMapper.INSTANCE.getAllCommentToDto(comment)));
-        return commentsDto;
+        return convertEntityListToDtoList(comments);
     }
 
     public List<Comment> getCommentByUserId(Long id){
@@ -81,25 +81,15 @@ public class CommentService extends ServiceManager<Comment,Long> {
         return commentRepository.findAllByUserId(id);
     }
 
-    public Boolean existsByUserId(Long id){
-        return commentRepository.existsByUserId(id);
-    }
-
     public List<CommentGetAllResponseDto> getAllByPostId(String postId) {
         if(!postService.existsById(Long.valueOf(postId))) throw new AvsBlogException(ErrorType.POST_NOT_FOUND_BY_ID);
         List<Comment> comments = getCommentByPostId(Long.valueOf(postId));
-        List<CommentGetAllResponseDto> commentsDto = new ArrayList<>();
-        comments.forEach(comment -> commentsDto.add(ICommentMapper.INSTANCE.getAllCommentToDto(comment)));
-        return commentsDto;
+        return convertEntityListToDtoList(comments);
     }
 
     public List<Comment> getCommentByPostId(Long id) {
         if(!existsByPostId(id)) throw new AvsBlogException(ErrorType.COMMENT_NOT_FOUND_ON_POST);
         return commentRepository.findAllByPostId(id);
-    }
-
-    public Boolean existsByPostId(Long id) {
-        return commentRepository.existsByPostId(id);
     }
 
     public void updatePostById(Long id, CommentUpdateRequestDto dto) {
@@ -118,5 +108,11 @@ public class CommentService extends ServiceManager<Comment,Long> {
         comment.getLiker().add(user);
         saveAndFlush(comment);
         return user.getUsername() + " liked comment content " + comment.getContent() + " !";
+    }
+
+    private List<CommentGetAllResponseDto> convertEntityListToDtoList(List<Comment> comments){
+        List<CommentGetAllResponseDto> commentsDto = new ArrayList<>();
+        comments.forEach(comment -> commentsDto.add(ICommentMapper.INSTANCE.getAllCommentToDto(comment)));
+        return commentsDto;
     }
 }

@@ -34,10 +34,6 @@ public class PostService extends ServiceManager<Post,Long> {
         this.userService = userService;
     }
 
-    public Boolean existsById(Long id){
-        return postRepository.existsById(id);
-    }
-
     public Boolean existsByUserId(Long id){
         return postRepository.existsByUserId(id);
     }
@@ -49,9 +45,7 @@ public class PostService extends ServiceManager<Post,Long> {
     public List<PostGetAllResponseDto> getAll() {
         List<Post> posts = findAll();
         if(posts.isEmpty()) throw new AvsBlogException(ErrorType.NO_POSTS_EXIST);
-        List<PostGetAllResponseDto> postsDto = new ArrayList<>();
-        posts.forEach(post -> postsDto.add(IPostMapper.INSTANCE.getAllPostToDto(post)));
-        return postsDto;
+        return convertEntityListToDtoList(posts);
     }
 
     public Post getPostById(Long id) {
@@ -89,28 +83,19 @@ public class PostService extends ServiceManager<Post,Long> {
     public List<PostGetAllResponseDto> getAllByUserId(String userId) {
         if(!userService.existsById(Long.valueOf(userId))) throw new AvsBlogException(ErrorType.USER_NOT_FOUND_BY_ID);
         List<Post> posts = getPostByUserId(Long.valueOf(userId));
-        List<PostGetAllResponseDto> postsDto = new ArrayList<>();
-        posts.forEach(post -> postsDto.add(IPostMapper.INSTANCE.getAllPostToDto(post)));
-        return postsDto;
+        return convertEntityListToDtoList(posts);
     }
 
-    //////// BURAYA BIR METHOD YAZILABILIR COPY PASTE SATIRLAR VAR
-    //// AYRICA EXISTSBYID DE FALAN HATAYI NEREDE FIRLATMAK DOĞRU OLUR BİR DÜŞÜNEBİLİRSİN.
     public List<PostGetAllResponseDto> getAllByCategoryId(String categoryId) {
         if(!categoryService.existsById(Long.valueOf(categoryId))) throw new AvsBlogException(ErrorType.CATEGORY_NOT_FOUND_BY_ID);
         List<Post> posts = getPostByCategoryId(Long.valueOf(categoryId));
-        List<PostGetAllResponseDto> postsDto = new ArrayList<>();
-        posts.forEach(post -> postsDto.add(IPostMapper.INSTANCE.getAllPostToDto(post)));
-        return postsDto;
+        return convertEntityListToDtoList(posts);
     }
-
 
     public List<PostGetAllResponseDto> getAllPostsBySearchParameter(String args) {
         List<Post> posts = findAllByTitleLikeIgnoreCaseOrContentLikeIgnoreCase(args, args);
         if(posts.isEmpty()) throw new AvsBlogException(ErrorType.POST_NOT_FOUND_BY_PARAMETER);
-        List<PostGetAllResponseDto> postsDto = new ArrayList<>();
-        posts.forEach(post -> postsDto.add(IPostMapper.INSTANCE.getAllPostToDto(post)));
-        return postsDto;
+        return convertEntityListToDtoList(posts);
     }
 
     public List<Post> findAllByTitleLikeIgnoreCaseOrContentLikeIgnoreCase(String args1, String args2) {
@@ -121,9 +106,7 @@ public class PostService extends ServiceManager<Post,Long> {
         if(!categoryService.existsByName(category)) throw new AvsBlogException(ErrorType.CATEGORY_NOT_FOUND_BY_NAME);
         List<Post> posts = postRepository.findAllPostsByCategoryNameNativeQuery(category);
         if(posts.isEmpty()) throw new AvsBlogException(ErrorType.POST_NOT_FOUND_BY_CATEGORY);
-        List<PostGetAllResponseDto> postsDto = new ArrayList<>();
-        posts.forEach(post -> postsDto.add(IPostMapper.INSTANCE.getAllPostToDto(post)));
-        return postsDto;
+        return convertEntityListToDtoList(posts);
     }
 
     public void updatePostById(Long id, PostUpdateRequestDto dto) {
@@ -140,9 +123,7 @@ public class PostService extends ServiceManager<Post,Long> {
     public List<PostGetAllResponseDto> getAllByDate() {
         List<Post> posts = postRepository.findAllByOrderByPublishDateDesc();
         if(posts.isEmpty()) throw new AvsBlogException(ErrorType.NO_POSTS_EXIST);
-        List<PostGetAllResponseDto> postsDto = new ArrayList<>();
-        posts.forEach(post -> postsDto.add(IPostMapper.INSTANCE.getAllPostToDto(post)));
-        return postsDto;
+        return convertEntityListToDtoList(posts);
     }
 
     public String likePostByUserId(Long postId, Long userId) {
@@ -153,5 +134,11 @@ public class PostService extends ServiceManager<Post,Long> {
         post.getLiker().add(user);
         saveAndFlush(post);
         return user.getUsername() + " liked post title " + post.getTitle() + " !";
+    }
+
+    private List<PostGetAllResponseDto> convertEntityListToDtoList(List<Post> posts){
+        List<PostGetAllResponseDto> postsDto = new ArrayList<>();
+        posts.forEach(post -> postsDto.add(IPostMapper.INSTANCE.getAllPostToDto(post)));
+        return postsDto;
     }
 }

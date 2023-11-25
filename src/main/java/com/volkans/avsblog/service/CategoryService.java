@@ -23,10 +23,6 @@ public class CategoryService extends ServiceManager<Category,Long> {
         this.categoryRepository = categoryRepository;
     }
 
-    public Boolean existsById(Long id){
-        return categoryRepository.existsById(id);
-    }
-
     public Boolean existsByName(String name){
         return categoryRepository.existsByName(name);
     }

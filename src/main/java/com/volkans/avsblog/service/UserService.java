@@ -2,8 +2,8 @@ package com.volkans.avsblog.service;
 
 import com.volkans.avsblog.dto.request.UserCreateRequestDto;
 import com.volkans.avsblog.dto.request.UserUpdateRequestDto;
-import com.volkans.avsblog.dto.response.UserGetAllResponseDto;
 import com.volkans.avsblog.dto.response.UserCreateResponseDto;
+import com.volkans.avsblog.dto.response.UserGetAllResponseDto;
 import com.volkans.avsblog.entity.User;
 import com.volkans.avsblog.entity.enums.EUserStatus;
 import com.volkans.avsblog.exception.AvsBlogException;
@@ -24,10 +24,6 @@ public class UserService extends ServiceManager<User,Long> {
     public UserService(UserRepository userRepository) {
         super(userRepository);
         this.userRepository = userRepository;
-    }
-
-    public Boolean existsById(Long id){
-        return userRepository.existsById(id);
     }
 
     public Boolean existsByEmail(String email){
@@ -89,7 +85,6 @@ public class UserService extends ServiceManager<User,Long> {
         if(!existsById(targetUserId)) throw new AvsBlogException(ErrorType.USER_NOT_FOUND_BY_ID, "No target user found by this id in database!");
         User followerUser = findById(followerUserId).get();
         User targetUser = findById(targetUserId).get();
-        System.out.println("DENEMEEEEEEEEEEEEEE");
         followerUser.getFollowings().add(targetUser);
         saveAndFlush(followerUser);
         return followerUser.getUsername() + " is now following " + targetUser.getUsername() + " !";

@@ -57,4 +57,9 @@ public class ServiceManager<T,ID> implements IService<T,ID>{
     public List<T> findAll() {
         return jpaRepository.findAll();
     }
+
+    @Override
+    public Boolean existsById(ID id) {
+        return jpaRepository.existsById(id);
+    }
 }
