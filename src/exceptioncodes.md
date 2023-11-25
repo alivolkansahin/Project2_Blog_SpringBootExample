@@ -96,7 +96,8 @@
 
 ### Exception Type 54XX -> Controller Layer Exceptions
     5401 --> BLANK PARAMETER ENTRY EXCEPTION
-    The error thrown when the data intended for the method arrives blank from the frontend.
+    The error thrown when @PathVariable data intended for the method arrives blank 
+    from the frontend.
     It throws an "HTTP Code 400 Bad Request" error to frontend.
 
     5402 --> BAD PARAMETERS FOR FOLLOW REQUEST EXCEPTION
@@ -107,12 +108,14 @@
 ### Exception Type 55XX -> Dto Layer Exceptions
     5501 --> METHOD ARGUMENT NOT VALID EXCEPTION
     The error thrown when data transfer object annotations cannot be validated in
-    controller layer with @Valid annotation (ex. @NotBlank field received as blank from frontend form)
+    controller layer with @Valid annotation 
+    (ex. @NotBlank field received as blank from frontend)
     It throws an "HTTP Code 400 Bad Request" error to frontend.
 
 ### Exception Type 56XX -> Entity Layer Exceptions
     5601 --> CONSTRAINT VIOLATION EXCEPTION
-    The error thrown when data is received from frontend passed dto annotations but is not suitable for the annotations
-    used in responsible entity class, therefore hibernate transaction actions cannot be completed. 
+    The error thrown when data is received from frontend passed dto annotations but 
+    is not suitable for the annotations used in responsible entity class, therefore 
+    hibernate transaction actions cannot be completed. 
     (ex. @PasswordDigitValidation, password field recevied without containing any digits.
     It throws an "HTTP Code 400 Bad Request" error to frontend.
