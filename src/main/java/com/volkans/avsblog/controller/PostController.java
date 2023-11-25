@@ -3,7 +3,6 @@ package com.volkans.avsblog.controller;
 
 import com.volkans.avsblog.dto.request.PostCreateRequestDto;
 import com.volkans.avsblog.dto.request.PostUpdateRequestDto;
-import com.volkans.avsblog.dto.request.UserUpdateRequestDto;
 import com.volkans.avsblog.dto.response.PostCreateResponseDto;
 import com.volkans.avsblog.dto.response.PostGetAllResponseDto;
 import com.volkans.avsblog.entity.Post;
@@ -15,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static com.volkans.avsblog.constant.EndPoint.*;

@@ -1,6 +1,5 @@
 package com.volkans.avsblog.mapper;
 
-import com.volkans.avsblog.dto.request.PostCreateRequestDto;
 import com.volkans.avsblog.dto.response.PostCreateResponseDto;
 import com.volkans.avsblog.dto.response.PostGetAllResponseDto;
 import com.volkans.avsblog.entity.Post;

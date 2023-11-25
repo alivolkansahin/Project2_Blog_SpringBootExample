@@ -2,7 +2,6 @@ package com.volkans.avsblog.controller;
 
 import com.volkans.avsblog.dto.request.CategoryCreateRequestDto;
 import com.volkans.avsblog.dto.request.CategoryUpdateRequestDto;
-import com.volkans.avsblog.dto.request.PostUpdateRequestDto;
 import com.volkans.avsblog.entity.Category;
 import com.volkans.avsblog.exception.AvsBlogException;
 import com.volkans.avsblog.exception.ErrorType;

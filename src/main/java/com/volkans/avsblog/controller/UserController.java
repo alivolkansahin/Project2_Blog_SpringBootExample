@@ -2,8 +2,8 @@ package com.volkans.avsblog.controller;
 
 import com.volkans.avsblog.dto.request.UserCreateRequestDto;
 import com.volkans.avsblog.dto.request.UserUpdateRequestDto;
-import com.volkans.avsblog.dto.response.UserGetAllResponseDto;
 import com.volkans.avsblog.dto.response.UserCreateResponseDto;
+import com.volkans.avsblog.dto.response.UserGetAllResponseDto;
 import com.volkans.avsblog.entity.User;
 import com.volkans.avsblog.exception.AvsBlogException;
 import com.volkans.avsblog.exception.ErrorType;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.util.List;
 
 import static com.volkans.avsblog.constant.EndPoint.*;

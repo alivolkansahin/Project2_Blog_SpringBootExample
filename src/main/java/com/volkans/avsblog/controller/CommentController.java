@@ -2,14 +2,9 @@ package com.volkans.avsblog.controller;
 
 import com.volkans.avsblog.dto.request.CommentCreateRequestDto;
 import com.volkans.avsblog.dto.request.CommentUpdateRequestDto;
-import com.volkans.avsblog.dto.request.PostCreateRequestDto;
-import com.volkans.avsblog.dto.request.PostUpdateRequestDto;
 import com.volkans.avsblog.dto.response.CommentCreateResponseDto;
 import com.volkans.avsblog.dto.response.CommentGetAllResponseDto;
-import com.volkans.avsblog.dto.response.PostCreateResponseDto;
-import com.volkans.avsblog.dto.response.PostGetAllResponseDto;
 import com.volkans.avsblog.entity.Comment;
-import com.volkans.avsblog.entity.Post;
 import com.volkans.avsblog.exception.AvsBlogException;
 import com.volkans.avsblog.exception.ErrorType;
 import com.volkans.avsblog.service.CommentService;
