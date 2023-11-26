@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseEntity<ErrorMessage> handleValidationException(ConstraintViolationException ex){
         String customizedMessage = ex.getConstraintViolations().stream().map(error -> error.getMessage()).collect(Collectors.joining(","));
-        HttpStatus httpStatus = HttpStatus.BAD_REQUEST; // 400 // 422 Unprocessable Entity ne kullanılabilir.
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST; // 400 // 422 Unprocessable Entity dee kullanılabilirdi.
         return new ResponseEntity<>(createError(ex, 5601, customizedMessage), httpStatus);
     }
 

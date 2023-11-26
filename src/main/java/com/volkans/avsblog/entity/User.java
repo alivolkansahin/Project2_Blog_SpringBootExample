@@ -71,7 +71,7 @@ public class User {
     private List<Post> favPosts = new ArrayList<>();
 
     @Builder.Default
-    @ManyToMany
+    @ManyToMany//    @Fetch(FetchMode.SELECT)
     private List<Category> favCategories = new ArrayList<>();
 
     @Builder.Default
@@ -83,9 +83,9 @@ public class User {
 
     @Builder.Default
     @ManyToMany
-//    @Fetch(FetchMode.SELECT)
     @JoinTable(name = "users_follow_relations",
             joinColumns = @JoinColumn(name="follower_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name="following_id", referencedColumnName = "id"))
     private List<User> followings = new ArrayList<>();
+
 }

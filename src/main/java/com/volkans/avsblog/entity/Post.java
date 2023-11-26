@@ -25,7 +25,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 150)
     @ColumnTransformer(write = "lower(?)")
     @Size(max = 150, message = "Title must not exceed {max} characters long")
     private String title;
@@ -41,7 +41,7 @@ public class Post {
     @Builder.Default
     private LocalDateTime publishDate = LocalDateTime.now().withNano(0);
 
-    @OneToOne
+    @ManyToOne
     private Category category;
 
     @OneToMany(mappedBy = "post")
